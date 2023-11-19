@@ -1,0 +1,37 @@
+{{template "body" .}}
+{{define "centralPart"}}
+<div class="container">
+    <div class="row">
+      <div class="col-lg-5 col-md-5 col-sm-12 mx-auto">
+        <img src="static\imgs\dens.jpg" class="img-fluid img-thumbnail" alt="Den's room">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <h1 class="text mt-3">Check Availability:</h1>
+        <form action="book.html" method="GET" novalidate class="needs-validation">
+          <div class="row">
+            <div class="col">
+              <div class="row" id="dayPicker">
+                <div class="col">
+                  <input type="text" required class="form-control" name="start" placeholder="Arrival">
+                </div>
+                <div class="col">
+                  <input type="text" required class="form-control" name="end" placeholder="Departure">
+                </div>
+              </div>
+            </div>
+          </div>
+          <br>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+          <hr>
+
+        <button class="bn btn-primary" id="notify_button">Get Notifier!</button>
+
+      </div>
+    </div>
+  </div>
+  
+  </div>
+{{end}}

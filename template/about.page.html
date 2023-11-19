@@ -2,19 +2,29 @@
 {{define "centralPart"}}
 <div class="container">
     <div class="row">
-        <div class="col">
-            <h1>This is ABOUT page</h1>
-            <p>This came from the handler: {{index .StringMap "test"}}</p>
-
-            <p>
-                {{if ne (index .StringMap "remote_ip") ""}}
-                Your remote IP address is: {{index .StringMap "remote_ip"}}
-                {{else}}
-                I don't know your IP address... Visit <a href="/">Home page</a> so I can set it.
-
-                {{end}}
-            </p>
+        <div class="col-lg-5 col-md-5 col-sm-12">
+            <img src="static\imgs\dens.jpg" class="img-fluid img-thumbnail" alt="Den's room">
         </div>
     </div>
-</div>
+    <div class="row">
+      <div class="col">
+        <h1 class="text-center mt-3">About Us:</h1>
+          <p>Welcome to Cozy Haven Bed and Breakfast
+At Cozy Haven Bed and Breakfast, we strive to create an unforgettable experience for our guests. Nestled in the heart of picturesque countryside, our charming motel offers a warm and inviting atmosphere for travelers seeking a home away from home.
+
+Our Story
+Founded in 2005 by a passionate group of hospitality enthusiasts, Cozy Haven was born out of a dream to provide a unique and personalized lodging experience. With a commitment to comfort, exceptional service, and a touch of old-world charm, we've been hosting guests from near and far with open arms.
+
+The Cozy Haven Experience
+Quaint Accommodations
+Our motel features thoughtfully decorated rooms, each with its own distinctive character. From rustic-themed suites to modern and minimalist designs, we cater to diverse tastes and preferences. Enjoy a peaceful night's sleep in our comfortable beds, and wake up to the aroma of freshly brewed coffee.
+
+Scenic Surroundings
+Situated amidst rolling hills and lush landscapes, Cozy Haven offers breathtaking views and a tranquil ambiance. Whether you're sipping a cup of tea on the porch or strolling through our manicured gardens, you'll find moments of serenity at every turn.
+
+Personalized Service
+              Our friendly and attentive staff is dedicated to making your stay memorable. From providing local recommendations to arranging special amenities, we go the extra mile to ensure that your time with us is nothing short of exceptional.</p>
+      </div>
+    </div>
+  </div>
 {{end}}

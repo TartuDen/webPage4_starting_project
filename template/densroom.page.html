@@ -1,0 +1,98 @@
+{{template "body" .}}
+{{define "centralPart"}}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-5 col-md-5 col-sm-12">
+            <img src="static\imgs\dens.jpg" class="img-fluid img-thumbnail" alt="Den's room">
+        </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <h1 class="text-center mt-3">Welcome to Den's room!</h1> 
+        <p>Den's Room, a haven of contemporary comfort, seamlessly blends modern aesthetics with 
+            inviting warmth. The room boasts sleek and stylish furnishings that create a chic ambiance, 
+            providing a perfect retreat for today's discerning traveler. Natural light floods through 
+            large windows, illuminating the room's clean lines and tasteful decor. Thoughtfully curated artwork 
+            adorns the walls, adding a touch of personality to the modern design. Plush bedding and well-appointed 
+            amenities ensure a luxurious and comfortable stay, while the tech-savvy features cater to the needs of the 
+            modern traveler. With a minimalist yet inviting atmosphere, Den's Room offers a tranquil space where guests 
+            can unwind in style after a day of exploration or business meetings. This modern retreat is designed to exceed 
+            expectations, providing a refreshing and sophisticated experience for those seeking a touch of contemporary elegance.</p>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col text-center">
+      <!-- <button type="button" class="btn btn-success">Make Reservation Now!</button> -->
+      <a href="#!" id="check-availability" class="btn btn-outline-success"><strong>Make Reservation Now!</strong></a>
+    </div>
+  </div>
+{{end}}
+
+{{define "js"}}
+  <script>
+    let attention = Prompt();
+            let myEl = document.getElementById("check-availability").addEventListener("click",function(){
+              let html = `
+              <form id="check-availability-form" action="" method="POST" novalidate class="needs-validation">
+                <div class="row">
+                  <div class="col">
+                    <div class="row" id="reservation-dates-modal">
+                      <div class="col">
+                        <input disabled required class="form-control" type="text" name="start" id="start" placeholder="Arrival">
+                      </div>
+                      <div class="col">
+                        <input disabled required class="form-control" type="text" name="end" id="end" placeholder="Departure">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+              `
+              attention.custom({msg: html, title: "Choose your dates:"});
+            })
+    
+
+            function Prompt(){
+              async function custom(c){
+                const {
+                  msg = "",
+                  title = "",
+                } = c;
+                const { value: formValues } = await Swal.fire({
+                    title: title,
+                    html: msg,
+                    backdrop: false,
+                    focusConfirm: false,
+                    showCancelButton: true,
+                    willOpen: () => {
+                        const elem = document.getElementById("reservation-dates-modal");
+                        const rp = new DateRangePicker(elem, {
+                            
+                            format: 'yyyy-mm-dd',
+                            showOnFocus: true,
+                            orientation: "top",
+                        })
+                    },
+                    didOpen: () => {
+                        document.getElementById("start").removeAttribute("disabled");
+                        document.getElementById("end").removeAttribute("disabled");
+                    },
+                    preConfirm: () => {
+                        return [
+                            document.getElementById('start').value,
+                            document.getElementById('end').value
+                        ]
+                    }
+                })
+                if (formValues) {
+                  Swal.fire(JSON.stringify(formValues));
+                }
+              }
+    
+              return {
+                custom: custom,
+              }
+            }
+  </script>
+{{end}}

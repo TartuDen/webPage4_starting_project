@@ -1,11 +1,52 @@
 {{template "body" .}}
 {{define "centralPart"}}
-<div class="container">
-    <div class="row">
-        <div class="col">
-            <h1>This is CENTRAL part</h1>
 
-        </div>
+  <div id="main-carousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+      <button type="button" data-bs-target="#main-carousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+      <button type="button" data-bs-target="#main-carousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+      <button type="button" data-bs-target="#main-carousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
     </div>
-</div>
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        
+        <img src="/static/imgs/outside.png" class="d-block w-100" alt="Outside">
+        <div class="carousel-caption d-none d-md-block">
+          <h5>Outside</h5>
+          <p>Look how beautiful is outside.</p>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <img src="/static/imgs/tray.png" class="d-block w-100" alt="A tray">
+        <div class="carousel-caption d-none d-md-block">
+          <h5>A tray with coffee</h5>
+          <p>We will wait you with coffee in the morning.</p>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <img src="/static/imgs/woman-laptop.png" class="d-block w-100" alt="Woman and laptop">
+        <div class="carousel-caption d-none d-md-block">
+          <h5>You can really rest here!</h5>
+          <p>Cozzy rooms are waiting for you!</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <h1 class="text-center mt-3">Welcome to our Bed and Breakfast!</h1> 
+        <p>Your home away from home...</p>
+        <p>Nestled in the heart of tranquility, our charming bed and breakfast offers a serene escape from the 
+          hustle and bustle of everyday life. The tastefully decorated rooms evoke a sense of comfort and warmth, each uniquely 
+          designed to provide a cozy retreat for our guests. From the moment you step through the door, you'll be greeted by a blend 
+          of classic elegance and modern amenities. Our attentive staff ensures personalized service, making you feel at home during 
+          your stay. Wake up to the aroma of a complimentary gourmet breakfast, thoughtfully prepared to tantalize your taste buds. 
+          The picturesque surroundings and meticulously landscaped gardens create an idyllic setting for relaxation, inviting you to unwind 
+          on our sun-dappled patio or explore the nearby attractions. Whether you're seeking a romantic getaway or a peaceful retreat, our 
+          bed and breakfast promises a memorable experience where every detail is crafted with your comfort in mind.</p>
+      </div>
+    </div>
+ </div>
 {{end}}

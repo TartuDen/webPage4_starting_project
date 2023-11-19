@@ -23,6 +23,17 @@ func routes(a *config.AppConfig) http.Handler {
 	// Associate the AboutHandler function from the handler.Repo struct with this route.
 	mux.Get("/about", handler.Repo.AboutHandler)
 
+	mux.Get("/dens-room", handler.Repo.DensRoomHandler)
+
+	mux.Get("/yurec-room", handler.Repo.YurecRoomHandler)
+	
+	mux.Get("/search-availability", handler.Repo.AvailableHandler)
+
+	mux.Get("/make-reservation", handler.Repo.BookHandler)
+	
+	mux.Get("/contact", handler.Repo.ContactHandler)
+
+
 	//creating file server
 	fileServer := http.FileServer(http.Dir("./static/"))
 	mux.Handle("/static/*", http.StripPrefix("/static", fileServer))

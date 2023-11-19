@@ -1,0 +1,90 @@
+{{template "body" .}}
+{{define "centralPart"}}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-5 col-md-5 col-sm-12">
+            <img src="/static/imgs/yurec.jpg" class="img-fluid img-thumbnail" alt="Yurec's room">
+        </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <h1 class="text-center mt-3">Welcome to Yourec's room!</h1> 
+        <p>Yurec Room, a charming retreat with an old-world allure, welcomes guests to a bygone era of timeless elegance. This room is adorned with classic furnishings that evoke a sense of nostalgia, transporting guests to a place where tradition meets comfort. Rich, antique-inspired decor and ornate details create a warm and inviting atmosphere, offering a unique blend of history and luxury. The room is bathed in soft, muted tones, providing a cozy and tranquil environment. Vintage artwork and carefully chosen accents add character to the space, ensuring an immersive experience in classic sophistication. Yurec Room invites guests to step back in time while enjoying modern conveniences, offering a retreat that combines the best of both worlds – old-world charm and contemporary comfort.</p>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col text-center">
+      <!-- <button type="button" class="btn btn-success">Make Reservation Now!</button> -->
+      <a href="#!" id="check-availability" class="btn btn-outline-success"><strong>Make Reservation Now!</strong></a>
+    </div>
+  </div>
+{{end}}
+
+{{define "js"}}
+  <script>
+    let attention = Prompt();
+            let myEl = document.getElementById("check-availability").addEventListener("click",function(){
+              let html = `
+              <form id="check-availability-form" action="" method="POST" novalidate class="needs-validation">
+                <div class="row">
+                  <div class="col">
+                    <div class="row" id="reservation-dates-modal">
+                      <div class="col">
+                        <input disabled required class="form-control" type="text" name="start" id="start" placeholder="Arrival">
+                      </div>
+                      <div class="col">
+                        <input disabled required class="form-control" type="text" name="end" id="end" placeholder="Departure">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+              `
+              attention.custom({msg: html, title: "Choose your dates:"});
+            })
+    
+
+            function Prompt(){
+              async function custom(c){
+                const {
+                  msg = "",
+                  title = "",
+                } = c;
+                const { value: formValues } = await Swal.fire({
+                    title: title,
+                    html: msg,
+                    backdrop: false,
+                    focusConfirm: false,
+                    showCancelButton: true,
+                    willOpen: () => {
+                        const elem = document.getElementById("reservation-dates-modal");
+                        const rp = new DateRangePicker(elem, {
+                            
+                            format: 'yyyy-mm-dd',
+                            showOnFocus: true,
+                            orientation: "top",
+                        })
+                    },
+                    didOpen: () => {
+                        document.getElementById("start").removeAttribute("disabled");
+                        document.getElementById("end").removeAttribute("disabled");
+                    },
+                    preConfirm: () => {
+                        return [
+                            document.getElementById('start').value,
+                            document.getElementById('end').value
+                        ]
+                    }
+                })
+                if (formValues) {
+                  Swal.fire(JSON.stringify(formValues));
+                }
+              }
+    
+              return {
+                custom: custom,
+              }
+            }
+  </script>
+{{end}}

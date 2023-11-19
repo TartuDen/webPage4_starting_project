@@ -52,3 +52,28 @@ func (m *Repository) AboutHandler(w http.ResponseWriter, r *http.Request) {
 		StringMap: stringMap,
 	})
 }
+
+//DensRoomHandler renders the room page
+func (m *Repository) DensRoomHandler(w http.ResponseWriter, r *http.Request){
+	renderer.RendererTemplate(w, "densroom.page.html",&models.TemplateData{})
+}
+
+//YurecRoomHandler renders the room page
+func (m *Repository) YurecRoomHandler(w http.ResponseWriter, r *http.Request){
+	renderer.RendererTemplate(w, "yurecroom.page.html",&models.TemplateData{})
+}
+
+//AvailableHandler renders the room page
+func (m *Repository) AvailableHandler(w http.ResponseWriter, r *http.Request){
+	renderer.RendererTemplate(w, "search-availability.page.html",&models.TemplateData{})
+}
+
+//ContactHandler renders the room page
+func (m *Repository) ContactHandler(w http.ResponseWriter, r *http.Request){
+	renderer.RendererTemplate(w, "contact.page.html",&models.TemplateData{})
+}
+
+//BookHandler renders the room page
+func (m *Repository) BookHandler(w http.ResponseWriter, r *http.Request){
+	renderer.RendererTemplate(w, "make-reservation.page.html",&models.TemplateData{})
+}
