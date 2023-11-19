@@ -33,6 +33,8 @@ func routes(a *config.AppConfig) http.Handler {
 	
 	mux.Get("/contact", handler.Repo.ContactHandler)
 
+	mux.Get("/make-reservation", handler.Repo.ReservationHandler)
+
 
 	//creating file server
 	fileServer := http.FileServer(http.Dir("./static/"))

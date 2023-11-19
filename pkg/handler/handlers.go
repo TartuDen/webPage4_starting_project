@@ -77,3 +77,8 @@ func (m *Repository) ContactHandler(w http.ResponseWriter, r *http.Request){
 func (m *Repository) BookHandler(w http.ResponseWriter, r *http.Request){
 	renderer.RendererTemplate(w, "bookNow.page.html",&models.TemplateData{})
 }
+
+//ReservationHandler renders the room page
+func (m *Repository) ReservationHandler(w http.ResponseWriter, r *http.Request){
+	renderer.RendererTemplate(w, "make-reservation.page.html",&models.TemplateData{})
+}
