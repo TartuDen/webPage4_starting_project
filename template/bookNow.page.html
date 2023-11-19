@@ -12,7 +12,7 @@
         <form action="book.html" method="GET" novalidate class="needs-validation">
           <div class="row">
             <div class="col">
-              <div class="row" id="dayPicker">
+              <div class="row" id="datePicker">
                 <div class="col">
                   <input type="text" required class="form-control" name="start" placeholder="Arrival">
                 </div>
@@ -25,13 +25,19 @@
           <br>
           <button type="submit" class="btn btn-primary">Submit</button>
         </form>
-          <hr>
-
-        <button class="bn btn-primary" id="notify_button">Get Notifier!</button>
-
       </div>
     </div>
   </div>
-  
   </div>
+{{end}}
+{{define "js"}}
+  <script>
+    const elem = document.getElementById("datePicker");
+    const rp = new DateRangePicker(elem, {
+        
+        format: 'yyyy-mm-dd',
+        showOnFocus: true,
+        orientation: "top",
+    })
+  </script>
 {{end}}

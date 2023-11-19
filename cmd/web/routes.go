@@ -29,7 +29,7 @@ func routes(a *config.AppConfig) http.Handler {
 	
 	mux.Get("/search-availability", handler.Repo.AvailableHandler)
 
-	mux.Get("/make-reservation", handler.Repo.BookHandler)
+	mux.Get("/bookNow", handler.Repo.BookHandler)
 	
 	mux.Get("/contact", handler.Repo.ContactHandler)
 
