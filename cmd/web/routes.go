@@ -26,15 +26,16 @@ func routes(a *config.AppConfig) http.Handler {
 	mux.Get("/dens-room", handler.Repo.DensRoomHandler)
 
 	mux.Get("/yurec-room", handler.Repo.YurecRoomHandler)
-	
+	// mux.Post("/yurec-room", handler.Repo.YurecPostRoomHandler)
+
 	mux.Get("/search-availability", handler.Repo.AvailableHandler)
 
 	mux.Get("/bookNow", handler.Repo.BookHandler)
-	
+	mux.Post("/bookNow", handler.Repo.BookPostHandler)
+
 	mux.Get("/contact", handler.Repo.ContactHandler)
 
 	mux.Get("/make-reservation", handler.Repo.ReservationHandler)
-
 
 	//creating file server
 	fileServer := http.FileServer(http.Dir("./static/"))

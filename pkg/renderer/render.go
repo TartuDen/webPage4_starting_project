@@ -9,6 +9,7 @@ import (
 
 	"github.com/TartuDen/webPage4_starting_project/pkg/config"
 	"github.com/TartuDen/webPage4_starting_project/pkg/models"
+	"github.com/justinas/nosurf"
 )
 
 // this var serves to pass data from main.go to render.go
@@ -19,12 +20,13 @@ func NewTemplate(a *config.AppConfig) {
 	app = a
 }
 
-func AddDefaultData(td *models.TemplateData) *models.TemplateData {
+func AddDefaultData(td *models.TemplateData, r *http.Request) *models.TemplateData {
+	td.CSRFToken = nosurf.Token(r)
 	return td
 }
 
 // RendererTemplate renders template using html/template
-func RendererTemplate(w http.ResponseWriter, tmpl string, td *models.TemplateData) {
+func RendererTemplate(w http.ResponseWriter, tmpl string, r *http.Request, td *models.TemplateData) {
 	var templateCache map[string]*template.Template
 
 	if app.UseCache {
@@ -40,7 +42,7 @@ func RendererTemplate(w http.ResponseWriter, tmpl string, td *models.TemplateDat
 		log.Fatal(ok)
 	}
 
-	td = AddDefaultData(td)
+	td = AddDefaultData(td, r)
 
 	//optional final error check
 	buf := new(bytes.Buffer)

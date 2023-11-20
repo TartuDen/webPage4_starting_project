@@ -35,7 +35,7 @@ func NewHandlers(r *Repository) {
 func (m *Repository) MainHandler(w http.ResponseWriter, r *http.Request) {
 	remoteIP:=r.RemoteAddr
 	m.App.Session.Put(r.Context(),"remote_ip",remoteIP)
-	renderer.RendererTemplate(w, "home.page.html", &models.TemplateData{})
+	renderer.RendererTemplate(w, "home.page.html", r ,&models.TemplateData{})
 }
 
 // AboutHandler is a method of the Repository struct that handles requests to the about page.
@@ -48,37 +48,51 @@ func (m *Repository) AboutHandler(w http.ResponseWriter, r *http.Request) {
 	stringMap["remote_ip"]=remoteIP
 
 	//send data to the template
-	renderer.RendererTemplate(w, "about.page.html", &models.TemplateData{
+	renderer.RendererTemplate(w, "about.page.html", r, &models.TemplateData{
 		StringMap: stringMap,
 	})
 }
 
 //DensRoomHandler renders the room page
 func (m *Repository) DensRoomHandler(w http.ResponseWriter, r *http.Request){
-	renderer.RendererTemplate(w, "densroom.page.html",&models.TemplateData{})
+	renderer.RendererTemplate(w, "densroom.page.html", r, &models.TemplateData{})
 }
 
 //YurecRoomHandler renders the room page
 func (m *Repository) YurecRoomHandler(w http.ResponseWriter, r *http.Request){
-	renderer.RendererTemplate(w, "yurecroom.page.html",&models.TemplateData{})
+	renderer.RendererTemplate(w, "yurecroom.page.html", r, &models.TemplateData{})
 }
+// //YurecRoomHandler renders the room page
+// func (m *Repository) YurecPostRoomHandler(w http.ResponseWriter, r *http.Request){
+// 	// renderer.RendererTemplate(w, "yurecroom.page.html", r, &models.TemplateData{})
+// 	w.Write([]byte("Posted to search availability"))
+// }
 
 //AvailableHandler renders the room page
 func (m *Repository) AvailableHandler(w http.ResponseWriter, r *http.Request){
-	renderer.RendererTemplate(w, "search-availability.page.html",&models.TemplateData{})
+	renderer.RendererTemplate(w, "search-availability.page.html", r, &models.TemplateData{})
 }
 
 //ContactHandler renders the room page
 func (m *Repository) ContactHandler(w http.ResponseWriter, r *http.Request){
-	renderer.RendererTemplate(w, "contact.page.html",&models.TemplateData{})
+	renderer.RendererTemplate(w, "contact.page.html", r, &models.TemplateData{})
 }
 
 //BookHandler renders the room page
 func (m *Repository) BookHandler(w http.ResponseWriter, r *http.Request){
-	renderer.RendererTemplate(w, "bookNow.page.html",&models.TemplateData{})
+	renderer.RendererTemplate(w, "bookNow.page.html", r, &models.TemplateData{})
+}
+//BookHandler renders the room page
+func (m *Repository) BookPostHandler(w http.ResponseWriter, r *http.Request){
+	start:=r.FormValue("start")
+	end:=r.FormValue("end")
+	w.Write([]byte(start + " - " + end))
+
+	// renderer.RendererTemplate(w, "bookNow.page.html", r, &models.TemplateData{})
+	w.Write([]byte("Posted on handler"))
 }
 
 //ReservationHandler renders the room page
 func (m *Repository) ReservationHandler(w http.ResponseWriter, r *http.Request){
-	renderer.RendererTemplate(w, "make-reservation.page.html",&models.TemplateData{})
+	renderer.RendererTemplate(w, "make-reservation.page.html", r, &models.TemplateData{})
 }

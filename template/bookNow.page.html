@@ -8,8 +8,9 @@
     </div>
     <div class="row">
       <div class="col">
-        <h1 class="text mt-3">Check Availability:</h1>
-        <form action="book.html" method="GET" novalidate class="needs-validation">
+        <h1 class="text mt-3">Search Availability:</h1>
+        <form action="/bookNow" method="POST" novalidate class="needs-validation">
+          <input type="hidden" name="csrf_token" value={{.CSRFToken}}>
           <div class="row">
             <div class="col">
               <div class="row" id="datePicker">
