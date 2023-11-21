@@ -1,6 +1,8 @@
 package handler
 
 import (
+	"encoding/json"
+	"log"
 	"net/http"
 
 	"github.com/TartuDen/webPage4_starting_project/pkg/config"
@@ -82,6 +84,26 @@ func (m *Repository) ContactHandler(w http.ResponseWriter, r *http.Request){
 func (m *Repository) BookHandler(w http.ResponseWriter, r *http.Request){
 	renderer.RendererTemplate(w, "bookNow.page.html", r, &models.TemplateData{})
 }
+
+type jsonResponse struct{
+	OK bool `json:"ok"`
+	Message string `json:"message"`
+}
+//BookJSON handles request for availability and sends Json response
+func (m *Repository) BookJSON(w http.ResponseWriter, r *http.Request){
+	resp:=jsonResponse{
+		OK: true,
+		Message: "Available",
+	}
+
+	out,err:=json.MarshalIndent(resp,"","    ")
+	if err!=nil{
+		log.Println(err)
+	}
+	w.Header().Set("Content-Type","application/json")
+	w.Write(out)
+}
+
 //BookHandler renders the room page
 func (m *Repository) BookPostHandler(w http.ResponseWriter, r *http.Request){
 	start:=r.FormValue("start")

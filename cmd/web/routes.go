@@ -33,6 +33,8 @@ func routes(a *config.AppConfig) http.Handler {
 	mux.Get("/bookNow", handler.Repo.BookHandler)
 	mux.Post("/bookNow", handler.Repo.BookPostHandler)
 
+	mux.Get("/bookNow-json", handler.Repo.BookJSON)
+
 	mux.Get("/contact", handler.Repo.ContactHandler)
 
 	mux.Get("/make-reservation", handler.Repo.ReservationHandler)

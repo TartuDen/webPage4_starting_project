@@ -79,29 +79,89 @@
     
     
         <script>
-                  // Example starter JavaScript for disabling form submissions if there are invalid fields
-                  (function () {
-              'use strict'
-    
+            // Function to handle form submissions and apply custom Bootstrap validation styles
+            (function () {
+              'use strict';
+
               // Fetch all the forms we want to apply custom Bootstrap validation styles to
-              var forms = document.querySelectorAll('.needs-validation')
-    
-              // Loop over them and prevent submission
-              Array.prototype.slice.call(forms)
-                .forEach(function (form) {
-                  form.addEventListener('submit', function (event) {
-                    if (!form.checkValidity()) {
-                      event.preventDefault()
-                      event.stopPropagation()
+              var forms = document.querySelectorAll('.needs-validation');
+
+              // Loop over forms and prevent submission if invalid
+              Array.prototype.slice.call(forms).forEach(function (form) {
+                form.addEventListener('submit', function (event) {
+                  if (!form.checkValidity()) {
+                    event.preventDefault(); // Prevent form submission if invalid
+                    event.stopPropagation(); // Stop event propagation
+                  }
+
+                  form.classList.add('was-validated'); // Apply 'was-validated' class for Bootstrap styling
+                }, false);
+              });
+            })();
+
+            // Function to handle custom prompts
+            let attention = Prompt();
+
+            function Prompt() {
+              // Async function for custom prompts
+              async function custom(c) {
+                const {
+                  msg = "",
+                  title = "",
+                } = c;
+
+                // Show a prompt using Swal (SweetAlert) library
+                const { value: result } = await Swal.fire({
+                  title: title,
+                  html: msg,
+                  backdrop: false,
+                  focusConfirm: false,
+                  showCancelButton: true,
+                  willOpen: () => {
+                    // Code to execute when the prompt is about to open
+                    const elem = document.getElementById("reservation-dates-modal");
+                    const rp = new DateRangePicker(elem, {
+                      format: 'yyyy-mm-dd',
+                      showOnFocus: true,
+                      orientation: "top",
+                    });
+                  },
+                  didOpen: () => {
+                    // Code to execute after the prompt has opened
+                    document.getElementById("start").removeAttribute("disabled");
+                    document.getElementById("end").removeAttribute("disabled");
+                  },
+                  preConfirm: () => {
+                    // Retrieve values from specific form elements
+                    return [
+                      document.getElementById('start').value, 
+                      document.getElementById('end').value
+                    ];
+                  }
+                });
+
+
+                if (result){
+                  if (result.dismiss !== Swal.DismissReason.cancel){
+                    if (result.value !== ""){
+                      if (c.callback !== undefined){
+                        c.callback(result);
+                      }
+                    } else {
+                      c.callback(false);
                     }
-    
-                    form.classList.add('was-validated')
-                  }, false)
-                })
-            })()
-    
-            
-        </script>
+                  } else{
+                    c.callback(false);
+                  }
+                }
+              }
+
+              return {
+                custom: custom, // Return the custom function for external use
+              };
+            }
+
+            </script>
     </body>
     </html>
 {{end}}
