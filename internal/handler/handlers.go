@@ -5,9 +5,9 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/TartuDen/webPage4_starting_project/pkg/config"
-	"github.com/TartuDen/webPage4_starting_project/pkg/models"
-	"github.com/TartuDen/webPage4_starting_project/pkg/renderer"
+	"github.com/TartuDen/webPage4_starting_project/internal/config"
+	"github.com/TartuDen/webPage4_starting_project/internal/models"
+	"github.com/TartuDen/webPage4_starting_project/internal/renderer"
 )
 
 // TemplateData holds data sent from handlers to templates

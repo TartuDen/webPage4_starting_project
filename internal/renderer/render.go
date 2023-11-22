@@ -7,8 +7,8 @@ import (
 	"net/http"
 	"path/filepath"
 
-	"github.com/TartuDen/webPage4_starting_project/pkg/config"
-	"github.com/TartuDen/webPage4_starting_project/pkg/models"
+	"github.com/TartuDen/webPage4_starting_project/internal/config"
+	"github.com/TartuDen/webPage4_starting_project/internal/models"
 	"github.com/justinas/nosurf"
 )
 

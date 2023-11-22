@@ -3,8 +3,8 @@ package main
 import (
 	"net/http"
 
-	"github.com/TartuDen/webPage4_starting_project/pkg/config"
-	"github.com/TartuDen/webPage4_starting_project/pkg/handler"
+	"github.com/TartuDen/webPage4_starting_project/internal/config"
+	"github.com/TartuDen/webPage4_starting_project/internal/handler"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 )
@@ -33,7 +33,7 @@ func routes(a *config.AppConfig) http.Handler {
 	mux.Get("/bookNow", handler.Repo.BookHandler)
 	mux.Post("/bookNow", handler.Repo.BookPostHandler)
 
-	mux.Get("/bookNow-json", handler.Repo.BookJSON)
+	mux.Post("/bookNow-json", handler.Repo.BookJSON)
 
 	mux.Get("/contact", handler.Repo.ContactHandler)
 

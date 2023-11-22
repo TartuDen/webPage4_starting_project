@@ -119,17 +119,16 @@
                   showCancelButton: true,
                   willOpen: () => {
                     // Code to execute when the prompt is about to open
-                    const elem = document.getElementById("reservation-dates-modal");
-                    const rp = new DateRangePicker(elem, {
-                      format: 'yyyy-mm-dd',
-                      showOnFocus: true,
-                      orientation: "top",
-                    });
+                    if (c.willOpen !==undefined){
+                      c.willOpen();
+                    }
+                    
                   },
                   didOpen: () => {
                     // Code to execute after the prompt has opened
-                    document.getElementById("start").removeAttribute("disabled");
-                    document.getElementById("end").removeAttribute("disabled");
+                    if (c.didOpen !==undefined){
+                      c.didOpen();
+                    }
                   },
                   preConfirm: () => {
                     // Retrieve values from specific form elements

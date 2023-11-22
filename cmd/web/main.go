@@ -6,9 +6,9 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/TartuDen/webPage4_starting_project/pkg/config"
-	"github.com/TartuDen/webPage4_starting_project/pkg/handler"
-	"github.com/TartuDen/webPage4_starting_project/pkg/renderer"
+	"github.com/TartuDen/webPage4_starting_project/internal/config"
+	"github.com/TartuDen/webPage4_starting_project/internal/handler"
+	"github.com/TartuDen/webPage4_starting_project/internal/renderer"
 	"github.com/alexedwards/scs/v2"
 )
 

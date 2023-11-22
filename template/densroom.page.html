@@ -51,8 +51,44 @@
               attention.custom({
                 msg: html, 
                 title: "Choose your dates:",
+
+                willOpen: () => {
+                    // Code to execute when the prompt is about to open
+                    const elem = document.getElementById("reservation-dates-modal");
+                    const rp = new DateRangePicker(elem, {
+                      format: 'yyyy-mm-dd',
+                      showOnFocus: true,
+                      orientation: "top",
+                    });
+                  },
+
+                  didOpen: () => {
+                    // Code to execute after the prompt has opened
+                    document.getElementById("start").removeAttribute("disabled");
+                    document.getElementById("end").removeAttribute("disabled");
+                  },
+
                 callback: function(result){
                   console.log("called");
+                  let form = document.getElementById("check-availability-form");
+                  let formData = new FormData(form);
+                  formData.append("csrf_token", "{{ .CSRFToken}}")
+
+
+
+                  //default method of GET
+                  // fetch("/bookNow-json")
+
+                  //method POST
+                  fetch("/bookNow-json", {
+                    method: "post",
+                    body: formData,
+                  })
+
+                    .then(response => response.json())
+                    .then (data => {
+                      console.log(data);
+                    })
                 }
               });
             })
