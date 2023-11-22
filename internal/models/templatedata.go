@@ -1,5 +1,7 @@
 package models
 
+import "github.com/TartuDen/webPage4_starting_project/internal/forms"
+
 type TemplateData struct {
 	StringMap map[string]string
 	IntMap    map[string]int
@@ -11,4 +13,5 @@ type TemplateData struct {
 	Flash   string
 	Warning string
 	Error   string
+	Form *forms.From
 }
