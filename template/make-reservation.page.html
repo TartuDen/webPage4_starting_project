@@ -5,38 +5,55 @@
             <div class="col">
             <h1 class="text mt-3">Let's make reservation:</h1>
 
-                {{$ res := index .Data "reservation"}}
+                {{$res := index .Data "reservation"}}
                 <form action="/make-reservation" method="POST" novalidate class="">
                     <input type="hidden" name="csrf_token" value="{{.CSRFToken}}">
                     <div class="row">
                         <div class="col">
-                            <label for="FristName"></label>
-                            {{with .Form.Errors.Get "FristName"}}
-                                <label for="FristName" class="text-danger">{{.}}</label>
+                            <label for="first_name"></label>
+                            
+                            <!-- to display the error message -->
+                            {{with .Form.Errors.Get "first_name"}}
+                                <label for="first_name" class="text-danger">{{.}}</label>
                             {{end}}
-                            <input type="text" required class="form-control {{with .Form.Errors.Get "FristName"}} is-invalid {{end}}" 
-                            name="FristName" value="" placeholder="First Name">
+                            <input type="text" required class="form-control {{with .Form.Errors.Get "FirstName"}} is-invalid {{end}}" 
+                            name="first_name" value="{{$res.FirstName}}" placeholder="First Name">
                         </div>
                     </div>
     
                     <div class="row">
                         <div class="col">
-                            <label for="LastName"></label>
-                            <input type="text" required class="form-control" name="LastName" placeholder="Last Name">
+                            <label for="last_name"></label>
+                            <!-- to display the error message -->
+                            {{with .Form.Errors.Get "last_name"}}
+                                <label for="last_name" class="text-danger">{{.}}</label>
+                            {{end}}
+                            <input type="text" required class="form-control {{with .Form.Errors.Get "LastName"}} is-invalid {{end}}" 
+                            name="last_name" value="{{$res.LastName}}" placeholder="Last Name">
                         </div>
                     </div>
     
                     <div class="row">
                         <div class="col">
-                            <label for="Email"></label>
-                            <input type="email" required class="form-control" name="Email" placeholder="@email">
+                            <label for="email"></label>
+                            <!-- to display the error message -->
+                            {{with .Form.Errors.Get "email"}}
+                                <label for="email" class="text-danger">{{.}}</label>
+                            {{end}}
+                            <input type="email" required class="form-control {{with .Form.Errors.Get "Email"}} is-invalid {{end}}" 
+                            name="email" value="{{$res.Email}}"  placeholder="@email">
                         </div>
                     </div>
     
                     <div class="row">
                         <div class="col">
-                            <label for="PhoneNumber"></label>
-                            <input type="text" required class="form-control" name="PhoneNumber" placeholder="+372 - phone number">
+                            <label for="phone_number"></label>
+                            <!-- to display the error message -->
+                            {{with .Form.Errors.Get "phone_number"}}
+                                <label for="phone_number" class="text-danger">{{.}}</label>
+                            {{end}}
+                            <input type="text" required class="form-control {{with .Form.Errors.Get "PhoneNumber"}} is-invalid {{end}}" 
+                            name="phone_number" value="{{$res.Phone}}" placeholder="+372 - phone number">
                         </div>
                     </div>
                     <br>

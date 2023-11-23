@@ -120,8 +120,8 @@ func (m *Repository) BookPostHandler(w http.ResponseWriter, r *http.Request) {
 // ReservationHandler renders the room page
 func (m *Repository) ReservationHandler(w http.ResponseWriter, r *http.Request) {
 	var emptyReserv models.Reservation
-	data:=make(map[string]interface{})
-	data["reservation"]=emptyReserv
+	data := make(map[string]interface{})
+	data["reservation"] = emptyReserv
 	renderer.RendererTemplate(w, "make-reservation.page.html", r, &models.TemplateData{
 		Form: forms.NewForm(nil),
 		Data: data,
@@ -130,21 +130,33 @@ func (m *Repository) ReservationHandler(w http.ResponseWriter, r *http.Request) 
 
 // PostMakeReservation handles the POsting of the reservation form
 func (m *Repository) PostMakeReservation(w http.ResponseWriter, r *http.Request) {
-	err:=r.ParseForm()
-	if err!=nil{
+	err := r.ParseForm()
+	if err != nil {
 		log.Println(err)
 	}
-	reservation:=models.Reservation{
-		Fristname: r.FormValue("FristName"),
-		Lastname: r.FormValue("LastName"),
-		Email: r.FormValue("Email"),
-		Phone: r.FormValue("PhoneNumber"),
+
+	reservation := models.Reservation{
+		FirstName: r.FormValue("first_name"),
+		LastName:  r.FormValue("last_name"),
+		Email:     r.FormValue("email"),
+		Phone:     r.FormValue("phone_number"),
 	}
 
-	form:=forms.NewForm(r.PostForm)
-	form.Has("FristName",r)
-	if !form.Valid(){
-		data:=make(map[string]interface{})
+	form := forms.NewForm(r.PostForm)
+
+	// form.Has("FirstName",r)
+
+	form.Required("first_name", "last_name", "email")
+	form.MinLen("first_name", 4, r)
+	form.MinLen("last_name", 4, r)
+	form.MaxLen("first_name", 10, r)
+	form.MaxLen("last_name", 10, r)
+
+	//manually written valid func for email
+	form.EmailFormat("email",r)
+
+	if !form.Valid() {
+		data := make(map[string]interface{})
 		data["reservation"] = reservation
 		renderer.RendererTemplate(w, "make-reservation.page.html", r, &models.TemplateData{
 			Form: form,
