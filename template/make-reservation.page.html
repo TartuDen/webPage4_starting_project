@@ -10,7 +10,11 @@
                     <div class="row">
                         <div class="col">
                             <label for="FristName"></label>
-                            <input type="text" required class="form-control" name="FristName" placeholder="First Name">
+                            {{with .Form.Errors.Get "FristName"}}
+                                <label for="FristName" class="text-danger">{{.}}</label>
+                            {{end}}
+                            <input type="text" required class="form-control {{with .Form.Errors.Get "FristName"}} is-invalid {{end}}" 
+                            name="FristName" placeholder="First Name">
                         </div>
                     </div>
     

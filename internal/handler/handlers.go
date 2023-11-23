@@ -126,5 +126,26 @@ func (m *Repository) ReservationHandler(w http.ResponseWriter, r *http.Request) 
 
 // PostMakeReservation handles the POsting of the reservation form
 func (m *Repository) PostMakeReservation(w http.ResponseWriter, r *http.Request) {
+	err:=r.ParseForm()
+	if err!=nil{
+		log.Println(err)
+	}
+	reservation:=models.Reservation{
+		Fristname: r.FormValue("FristName"),
+		Lastname: r.FormValue("LastName"),
+		Email: r.FormValue("Email"),
+		Phone: r.FormValue("PhoneNumber"),
+	}
 
+	form:=forms.NewForm(r.PostForm)
+	form.Has("FristName",r)
+	if !form.Valid(){
+		data:=make(map[string]interface{})
+		data["reservation"] = reservation
+		renderer.RendererTemplate(w, "make-reservation.page.html", r, &models.TemplateData{
+			Form: form,
+			Data: data,
+		})
+		return
+	}
 }
