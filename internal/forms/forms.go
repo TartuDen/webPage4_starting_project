@@ -6,6 +6,8 @@ import (
 	"net/url"
 	"regexp"
 	"strings"
+
+	"github.com/asaskevich/govalidator"
 )
 
 // Form creates a custom Form struct and embeds an url.Values object
@@ -26,7 +28,7 @@ func NewForm(data url.Values) *Form {
 	}
 }
 
-//Required checks for required fields
+// Required checks for required fields
 func (f *Form) Required(fields ...string) {
 	for _, field := range fields {
 		value := f.Get(field)
@@ -67,9 +69,14 @@ func (f *Form) MaxLen(field string, length int, r *http.Request) bool {
 	return true
 }
 
+// IsEmail - checks for valid email address (external package)
+func (f *Form) IsEmail(field string) {
+	if !govalidator.IsEmail(f.Get(field)) {
+		f.Errors.Add(field, "Invalid Email Address.")
+	}
+}
 
-
-//manually written emal validators
+// manually written emal validators
 func IsValidEmail(email string) bool {
 	// Regular expression pattern for basic email validation
 	emailPattern := `^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$`

@@ -151,9 +151,10 @@ func (m *Repository) PostMakeReservation(w http.ResponseWriter, r *http.Request)
 	form.MinLen("last_name", 4, r)
 	form.MaxLen("first_name", 10, r)
 	form.MaxLen("last_name", 10, r)
+	form.IsEmail("email")
 
 	//manually written valid func for email
-	form.EmailFormat("email",r)
+	// form.EmailFormat("email", r)
 
 	if !form.Valid() {
 		data := make(map[string]interface{})
