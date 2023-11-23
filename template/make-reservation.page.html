@@ -4,7 +4,8 @@
         <div class="row">
             <div class="col">
             <h1 class="text mt-3">Let's make reservation:</h1>
-                <!-- <form action="" method="POST" novalidate class="needs-validation"> -->
+
+                {{$ res := index .Data "reservation"}}
                 <form action="/make-reservation" method="POST" novalidate class="">
                     <input type="hidden" name="csrf_token" value="{{.CSRFToken}}">
                     <div class="row">
@@ -14,7 +15,7 @@
                                 <label for="FristName" class="text-danger">{{.}}</label>
                             {{end}}
                             <input type="text" required class="form-control {{with .Form.Errors.Get "FristName"}} is-invalid {{end}}" 
-                            name="FristName" placeholder="First Name">
+                            name="FristName" value="" placeholder="First Name">
                         </div>
                     </div>
     

@@ -119,8 +119,12 @@ func (m *Repository) BookPostHandler(w http.ResponseWriter, r *http.Request) {
 
 // ReservationHandler renders the room page
 func (m *Repository) ReservationHandler(w http.ResponseWriter, r *http.Request) {
+	var emptyReserv models.Reservation
+	data:=make(map[string]interface{})
+	data["reservation"]=emptyReserv
 	renderer.RendererTemplate(w, "make-reservation.page.html", r, &models.TemplateData{
 		Form: forms.NewForm(nil),
+		Data: data,
 	})
 }
 
