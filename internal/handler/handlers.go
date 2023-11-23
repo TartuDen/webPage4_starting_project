@@ -166,3 +166,10 @@ func (m *Repository) PostMakeReservation(w http.ResponseWriter, r *http.Request)
 		return
 	}
 }
+
+func (m *Repository)ReservationSummary(w http.ResponseWriter, r *http.Request){
+	renderer.RendererTemplate(w, "reservation-summary.page.html", r, &models.TemplateData{
+		
+	})
+}
+

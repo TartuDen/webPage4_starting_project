@@ -6,7 +6,7 @@
             <h1 class="text mt-3">Let's make reservation:</h1>
 
                 {{$res := index .Data "reservation"}}
-                <form action="/make-reservation" method="POST" novalidate class="">
+                <form action="/reservation-summary" method="POST" novalidate class="">
                     <input type="hidden" name="csrf_token" value="{{.CSRFToken}}">
                     <div class="row">
                         <div class="col">
