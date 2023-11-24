@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/gob"
 	"fmt"
 	"log"
 	"net/http"
@@ -8,6 +9,7 @@ import (
 
 	"github.com/TartuDen/webPage4_starting_project/internal/config"
 	"github.com/TartuDen/webPage4_starting_project/internal/handler"
+	"github.com/TartuDen/webPage4_starting_project/internal/models"
 	"github.com/TartuDen/webPage4_starting_project/internal/renderer"
 	"github.com/alexedwards/scs/v2"
 )
@@ -20,6 +22,9 @@ var app config.AppConfig
 var session *scs.SessionManager
 
 func main() {
+
+	//What are we going to store in session
+	gob.Register(models.Reservation{})
 
 	//Change this to true when in production
 	app.InProduction = false

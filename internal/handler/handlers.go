@@ -165,11 +165,28 @@ func (m *Repository) PostMakeReservation(w http.ResponseWriter, r *http.Request)
 		})
 		return
 	}
+
+	// if there is no error, we upload Form data into our Session
+	m.App.Session.Put(r.Context(), "reservation", reservation)
+
+	//Always, when you recieve a POST request, use Redirect to redirect to another page, so user accidently don't submit form more that once!!!
+	http.Redirect(w, r, "/reservation-summary", http.StatusSeeOther)
 }
 
-func (m *Repository)ReservationSummary(w http.ResponseWriter, r *http.Request){
+func (m *Repository) ReservationSummary(w http.ResponseWriter, r *http.Request) {
+	reservation, ok := m.App.Session.Get(r.Context(), "reservation").(models.Reservation)
+	if !ok {
+		log.Println("Cannot get item from Session")
+		m.App.Session.Put(r.Context(), "error", "Can't get reservation from Session")
+		http.Redirect(w, r, "/", http.StatusTemporaryRedirect)
+		return
+	}
+	//after Reservation Summary is compiled, remove data from reservation session
+	m.App.Session.Remove(r.Context(), "reservation")
+
+	data := make(map[string]interface{})
+	data["reservation"] = reservation
 	renderer.RendererTemplate(w, "reservation-summary.page.html", r, &models.TemplateData{
-		
+		Data: data,
 	})
 }
-
