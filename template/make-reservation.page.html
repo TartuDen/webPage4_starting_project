@@ -52,7 +52,7 @@
                             {{with .Form.Errors.Get "phone_number"}}
                                 <label for="phone_number" class="text-danger">{{.}}</label>
                             {{end}}
-                            <input type="text" required class="form-control {{with .Form.Errors.Get "PhoneNumber"}} is-invalid {{end}}" 
+                            <input type="text" required class="form-control {{with .Form.Errors.Get "Phone"}} is-invalid {{end}}" 
                             name="phone_number" value="{{$res.Phone}}" placeholder="+372 - phone number">
                         </div>
                     </div>
