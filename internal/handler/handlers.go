@@ -2,11 +2,11 @@ package handler
 
 import (
 	"encoding/json"
-	"log"
 	"net/http"
 
 	"github.com/TartuDen/webPage4_starting_project/internal/config"
 	"github.com/TartuDen/webPage4_starting_project/internal/forms"
+	"github.com/TartuDen/webPage4_starting_project/internal/helpers"
 	"github.com/TartuDen/webPage4_starting_project/internal/models"
 	"github.com/TartuDen/webPage4_starting_project/internal/renderer"
 )
@@ -35,9 +35,9 @@ func NewHandlers(r *Repository) {
 
 // MainHandler is a method of the Repository struct that handles requests to the main page.
 // It renders the "home.page.html" template to the provided HTTP response writer.
-func (m *Repository) MainHandler(w http.ResponseWriter, r *http.Request) {
-	remoteIP := r.RemoteAddr
-	m.App.Session.Put(r.Context(), "remote_ip", remoteIP)
+func (m *Repository) HomeHandler(w http.ResponseWriter, r *http.Request) {
+	// remoteIP := r.RemoteAddr
+	// m.App.Session.Put(r.Context(), "remote_ip", remoteIP)
 	renderer.RendererTemplate(w, "home.page.html", r, &models.TemplateData{})
 }
 
@@ -45,15 +45,13 @@ func (m *Repository) MainHandler(w http.ResponseWriter, r *http.Request) {
 // It renders the "about.page.html" template to the provided HTTP response writer.
 func (m *Repository) AboutHandler(w http.ResponseWriter, r *http.Request) {
 	//perform some logic
-	stringMap := make(map[string]string)
-	stringMap["test"] = "this is test data!"
-	remoteIP := m.App.Session.GetString(r.Context(), "remote_ip")
-	stringMap["remote_ip"] = remoteIP
+	// stringMap := make(map[string]string)
+	// stringMap["test"] = "this is test data!"
+	// remoteIP := m.App.Session.GetString(r.Context(), "remote_ip")
+	// stringMap["remote_ip"] = remoteIP
 
 	//send data to the template
-	renderer.RendererTemplate(w, "about.page.html", r, &models.TemplateData{
-		StringMap: stringMap,
-	})
+	renderer.RendererTemplate(w, "about.page.html", r, &models.TemplateData{})
 }
 
 // DensRoomHandler renders the room page
@@ -101,7 +99,8 @@ func (m *Repository) BookJSON(w http.ResponseWriter, r *http.Request) {
 
 	out, err := json.MarshalIndent(resp, "", "    ")
 	if err != nil {
-		log.Println(err)
+		helpers.ServerError(w, err)
+		return
 	}
 	w.Header().Set("Content-Type", "application/json")
 	w.Write(out)
@@ -129,10 +128,11 @@ func (m *Repository) ReservationHandler(w http.ResponseWriter, r *http.Request) 
 }
 
 // PostMakeReservation handles the POsting of the reservation form
-func (m *Repository) PostMakeReservation(w http.ResponseWriter, r *http.Request) {
+func (m *Repository) PostReservation(w http.ResponseWriter, r *http.Request) {
 	err := r.ParseForm()
+	// err = errors.New("This is error message") testing error message
 	if err != nil {
-		log.Println(err)
+		helpers.ServerError(w, err)
 	}
 
 	reservation := models.Reservation{
@@ -176,7 +176,7 @@ func (m *Repository) PostMakeReservation(w http.ResponseWriter, r *http.Request)
 func (m *Repository) ReservationSummary(w http.ResponseWriter, r *http.Request) {
 	reservation, ok := m.App.Session.Get(r.Context(), "reservation").(models.Reservation)
 	if !ok {
-		log.Println("Cannot get item from Session")
+		m.App.ErrorLog.Println("Can't get error from session")
 		m.App.Session.Put(r.Context(), "error", "Can't get reservation from Session")
 		http.Redirect(w, r, "/", http.StatusTemporaryRedirect)
 		return

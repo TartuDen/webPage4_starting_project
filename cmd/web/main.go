@@ -5,10 +5,12 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 	"time"
 
 	"github.com/TartuDen/webPage4_starting_project/internal/config"
 	"github.com/TartuDen/webPage4_starting_project/internal/handler"
+	"github.com/TartuDen/webPage4_starting_project/internal/helpers"
 	"github.com/TartuDen/webPage4_starting_project/internal/models"
 	"github.com/TartuDen/webPage4_starting_project/internal/renderer"
 	"github.com/alexedwards/scs/v2"
@@ -21,13 +23,36 @@ var app config.AppConfig
 
 var session *scs.SessionManager
 
+var infoLog *log.Logger
+var errorLog *log.Logger
+
 func main() {
 
+	err := run()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	srv := &http.Server{
+		Addr:    Port,
+		Handler: routes(&app),
+	}
+	err = srv.ListenAndServe()
+	log.Fatal(err)
+}
+
+func run() error {
 	//What are we going to store in session
 	gob.Register(models.Reservation{})
 
 	//Change this to true when in production
 	app.InProduction = false
+
+	infoLog = log.New(os.Stdout, "INFO\t", log.Ldate|log.Ltime)
+	app.InfoLog = infoLog
+
+	errorLog = log.New(os.Stdout, "ERROR\t", log.Ldate|log.Ltime|log.Lshortfile)
+	app.ErrorLog = errorLog
 
 	session = scs.New()
 	session.Lifetime = 24 * time.Hour
@@ -41,6 +66,7 @@ func main() {
 	tc, err := renderer.CreateTemplateCache()
 	if err != nil {
 		log.Fatal("cannot create template cache", err)
+		return err
 	}
 	app.TemplateCache = tc
 	//this var to set use cache true or false, when in Dev mode
@@ -59,6 +85,8 @@ func main() {
 	// templates with the app configuration. This prepares the application to render HTML templates.
 	renderer.NewTemplate(&app)
 
+	helpers.NewHelpers(&app)
+
 	// http.HandleFunc("/", handler.Repo.MainHandler)
 	// http.HandleFunc("/about", handler.Repo.AboutHandler)
 	fmt.Println("Server started on Port:", Port)
@@ -66,11 +94,5 @@ func main() {
 	// if err != nil {
 	// 	log.Fatal(err)
 	// }
-
-	srv := &http.Server{
-		Addr:    Port,
-		Handler: routes(&app),
-	}
-	err = srv.ListenAndServe()
-	log.Fatal(err)
+	return nil
 }

@@ -17,7 +17,7 @@ func routes(a *config.AppConfig) http.Handler {
 
 	// Add a route for HTTP GET requests to the root path ("/").
 	// Associate the MainHandler function from the handler.Repo struct with this route.
-	mux.Get("/", handler.Repo.MainHandler)
+	mux.Get("/", handler.Repo.HomeHandler)
 
 	// Add a route for HTTP GET requests to the "/about" path.
 	// Associate the AboutHandler function from the handler.Repo struct with this route.
@@ -37,10 +37,9 @@ func routes(a *config.AppConfig) http.Handler {
 
 	mux.Get("/contact", handler.Repo.ContactHandler)
 
-	
 	mux.Get("/make-reservation", handler.Repo.ReservationHandler)
-	mux.Post("/make-reservation", handler.Repo.PostMakeReservation)
-	mux.Get("/reservation-summary",handler.Repo.ReservationSummary)
+	mux.Post("/make-reservation", handler.Repo.PostReservation)
+	mux.Get("/reservation-summary", handler.Repo.ReservationSummary)
 
 	//creating file server
 	fileServer := http.FileServer(http.Dir("./static/"))
